@@ -1,9 +1,9 @@
-import { createStore } from 'vuex';
-import authService from '../services/auth.service';
+import { createStore } from "vuex";
+import authService from "../services/auth.service";
 
 const store = createStore({
   state: {
-    auth: {a:null}, // Biến auth dùng chung
+    auth: { a: null },
   },
   mutations: {
     setAuth(state, authData) {
@@ -14,9 +14,9 @@ const store = createStore({
     async fetchAuth({ commit }) {
       try {
         const auth = await authService.checkLogin();
-        commit('setAuth', auth); // Lưu dữ liệu auth vào state
+        commit("setAuth", auth); // Lưu dữ liệu auth vào state
       } catch (error) {
-        console.error('Lỗi khi fetch auth:', error);
+        console.error("Lỗi khi fetch auth:", error);
       }
     },
   },
