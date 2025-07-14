@@ -35,14 +35,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
-app.use("/api/nhaxuatban", protectedController.protected, nhaxuatbanRouter);
-app.use("/api/sach", protectedController.protected, sachRouter);
-app.use(
-  "/api/nhanvien",
-  protectedController.protected,
-  protectedController.isAdmin,
-  nhanvienRouter
-);
+app.use("/api/nhaxuatban", nhaxuatbanRouter);
+app.use("/api/sach", sachRouter);
+app.use("/api/nhanvien", nhanvienRouter);
 app.use(
   "/api/theodoimuonsach",
   protectedController.protected,
