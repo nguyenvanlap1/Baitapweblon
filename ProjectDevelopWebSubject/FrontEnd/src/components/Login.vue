@@ -7,13 +7,13 @@
       <div class="flex flex-col gap-4">
         <v-text-field
           v-model="_id"
-          label="MSNV"
+          label="Nhập Id"
           variant="outlined"
           required
         ></v-text-field>
 
         <v-text-field
-          label="Mật khẩu"
+          label="Nhập mật khẩu"
           v-model="password"
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="visible ? 'text' : 'password'"
@@ -57,9 +57,12 @@ export default {
         });
         await this.$store.dispatch("fetchAuth");
         console.log(response); // Kiểm tra phản hồi từ server
-        this.$emit("submit", "Đăng nhập thành công!");
+        this.$emit("submit", { success: true });
       } catch (error) {
-        console.log(error); // Kiểm tra lỗi
+        this.$emit("submit", {
+          success: false,
+          message: "Tài khoản hoặc mật khẩu không đúng.",
+        });
       }
     },
   },

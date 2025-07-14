@@ -5,6 +5,7 @@
         v-model="drawner"
         class="custom-drawer"
         theme="light"
+        app
         permanent
       >
         <v-list nav>
@@ -21,6 +22,13 @@
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <!-- Home -->
+          <v-list-item
+            class="custom-list-item"
+            :to="'/'"
+            prepend-icon="mdi-home"
+            title="Trang chủ"
+          ></v-list-item>
 
           <!-- Nếu đã đăng nhập và là nhân viên -->
           <v-list-item
@@ -47,10 +55,9 @@
             title="Sách"
           ></v-list-item>
 
-          <!-- Nếu là độc giả -->
           <v-list-item
             class="custom-list-item"
-            v-if="getAuth._id && !getAuth.chucvu"
+            v-if="getAuth._id && getAuth.chucvu"
             :to="'/muonsach'"
             prepend-icon="mdi-book-check"
             title="Mượn sách"

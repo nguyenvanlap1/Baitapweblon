@@ -1,9 +1,9 @@
 <template>
-  <v-app-bar :elevation="2" class="background-gradient">
+  <v-app-bar :elevation="2" class="background-gradient" app>
     <v-app-bar-nav-icon @click="handlClick"></v-app-bar-nav-icon>
     <v-app-bar-title><v-btn to="/">Quản Lý mượn sách</v-btn></v-app-bar-title>
     <v-spacer></v-spacer>
-    <v-btn text to="/">Home</v-btn>
+    <!-- <v-btn text to="/">Home</v-btn> -->
     <v-btn text v-if="!auth._id" @click="dialog = true">Đăng Nhập</v-btn>
     <v-btn text v-if="!auth._id" @click="registerForm = true">Đăng Ký</v-btn>
     <!-- Thêm đăng ký -->
@@ -99,7 +99,7 @@ export default {
     async confirmLogout() {
       try {
         await authService.logout();
-        this.$store.commit("setAuth", { a: null });
+        this.$store.commit("setAuth", {});
         this.snackbarMessage = "Đã đăng xuất thành công!";
         this.snackbarColor = "success";
         this.snackbar = true;
@@ -112,16 +112,26 @@ export default {
         this.confirmLogoutDialog = false;
       }
     },
-    handleRegisterSuccess() {
-      this.registerForm = false;
-      this.snackbarMessage = "Đăng ký thành công!";
-      this.snackbarColor = "success";
+    handleRegisterSuccess(result) {
+      if (result?.success) {
+        this.registerForm = false;
+        this.snackbarMessage = "Đăng ký thành công!";
+        this.snackbarColor = "success";
+      } else {
+        this.snackbarMessage = result?.message || "Đăng ký thất bại!";
+        this.snackbarColor = "error";
+      }
       this.snackbar = true;
     },
-    handleLoginSuccess() {
-      this.dialog = false;
-      this.snackbarMessage = "Đăng nhập thành công!";
-      this.snackbarColor = "success";
+    handleLoginSuccess(result) {
+      if (result?.success) {
+        this.dialog = false;
+        this.snackbarMessage = "Đăng nhập thành công!";
+        this.snackbarColor = "success";
+      } else {
+        this.snackbarMessage = result?.message || "Đăng nhập thất bại!";
+        this.snackbarColor = "error";
+      }
       this.snackbar = true;
     },
   },
