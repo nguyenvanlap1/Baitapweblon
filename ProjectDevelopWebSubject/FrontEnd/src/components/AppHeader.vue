@@ -10,27 +10,54 @@
     <v-btn text v-if="auth._id" @click="logout">Đăng Xuất</v-btn>
   </v-app-bar>
 
-  <v-dialog v-model="dialog" width="50%">
-    <v-card
-      title="Đăng nhập"
-      class="flex justify-center mx-auto p-2 rounded-xl w-full h-[700px] max-w-md"
-    >
-      <v-card-text>
-        <Login @submit="dialog = false"></Login>
+  <v-dialog v-model="dialog" max-width="500px">
+    <v-card class="p-0 rounded-xl overflow-hidden">
+      <v-card-title class="text-center pt-4 pb-0">Đăng nhập</v-card-title>
+      <v-card-text class="px-4 pt-2 pb-6">
+        <Login @submit="handleLoginSuccess" />
       </v-card-text>
     </v-card>
   </v-dialog>
 
-  <v-dialog v-model="registerForm" width="50%">
-    <v-card
-      class="flex justify-center items-center mx-auto p-2 rounded-xl w-full h-[700px] max-w-md"
-    >
-      <v-card-title>Đăng ký tài khoản</v-card-title>
-      <v-card-text class="p-1">
-        <Register @submit="registerForm = false" />
+  <v-dialog v-model="registerForm" max-width="500px">
+    <v-card class="p-0 rounded-xl overflow-hidden">
+      <v-card-title class="text-center pt-4 pb-0"
+        >Đăng ký tài khoản</v-card-title
+      >
+      <v-card-text class="px-4 pt-2 pb-6">
+        <Register @submit="handleRegisterSuccess" />
       </v-card-text>
     </v-card>
   </v-dialog>
+
+  <!-- Dialog xác nhận đăng xuất -->
+  <v-dialog v-model="confirmLogoutDialog" max-width="400px">
+    <v-card class="p-3 rounded-xl">
+      <v-card-title class="text-h6">Xác nhận đăng xuất</v-card-title>
+      <v-card-text>Bạn có chắc chắn muốn đăng xuất không?</v-card-text>
+      <v-card-actions class="justify-end">
+        <v-btn text @click="confirmLogoutDialog = false">Hủy</v-btn>
+        <v-btn
+          color="red"
+          variant="flat"
+          class="rounded-xl text-white font-semibold p-2"
+          @click="confirmLogout"
+        >
+          Đăng xuất
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+  <v-snackbar
+    v-model="snackbar"
+    :color="snackbarColor"
+    timeout="3000"
+    location="top center"
+    class="text-white font-semibold"
+  >
+    {{ snackbarMessage }}
+  </v-snackbar>
 </template>
 
 <script>
@@ -49,6 +76,10 @@ export default {
     return {
       dialog: false,
       registerForm: false,
+      snackbar: false,
+      snackbarMessage: "",
+      snackbarColor: "success",
+      confirmLogoutDialog: false,
     };
   },
   computed: {
@@ -58,16 +89,40 @@ export default {
     },
   },
   methods: {
-    async logout() {
-      try {
-        console.log(await authService.logout());
-        this.$store.commit("setAuth", { a: null }); // Reset auth
-      } catch (error) {
-        console.error("Logout failed:", error);
-      }
-    },
     handlClick() {
       this.$emit("turnDrawer");
+    },
+    logout() {
+      // Khi nhấn nút đăng xuất, chỉ hiện dialog
+      this.confirmLogoutDialog = true;
+    },
+    async confirmLogout() {
+      try {
+        await authService.logout();
+        this.$store.commit("setAuth", { a: null });
+        this.snackbarMessage = "Đã đăng xuất thành công!";
+        this.snackbarColor = "success";
+        this.snackbar = true;
+      } catch (error) {
+        console.error("Logout failed:", error);
+        this.snackbarMessage = "Có lỗi xảy ra khi đăng xuất.";
+        this.snackbarColor = "error";
+        this.snackbar = true;
+      } finally {
+        this.confirmLogoutDialog = false;
+      }
+    },
+    handleRegisterSuccess() {
+      this.registerForm = false;
+      this.snackbarMessage = "Đăng ký thành công!";
+      this.snackbarColor = "success";
+      this.snackbar = true;
+    },
+    handleLoginSuccess() {
+      this.dialog = false;
+      this.snackbarMessage = "Đăng nhập thành công!";
+      this.snackbarColor = "success";
+      this.snackbar = true;
     },
   },
 };
@@ -75,7 +130,7 @@ export default {
 
 <style scoped>
 .background-gradient {
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  background: linear-gradient(135deg, #0a2496, #656ddc);
   color: white;
 }
 </style>
