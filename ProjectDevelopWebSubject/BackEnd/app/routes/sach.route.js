@@ -1,16 +1,15 @@
-const express = require('express');
-const sach  = require('../controllers/sach.controller');
+const express = require("express");
+const sach = require("../controllers/sach.controller");
+const upload = require("../config/cloudinaryStorage");
 
 const router = express.Router();
 
-router.route("/")
-    .get(sach.findAll)
-    .post(sach.create)
-    .delete(sach.deleteAll);
+router.post("/", upload.single("image"), sach.create);
 
-router.route("/:id")
-    .get(sach.findOne)
-    .put(sach.update)
-    .delete(sach.delete);
+router.put("/:id", upload.single("image"), sach.update);
 
-module.exports=router;
+router.route("/").get(sach.findAll).delete(sach.deleteAll); // POST đã xử lý riêng ở trên
+
+router.route("/:id").get(sach.findOne).delete(sach.delete);
+
+module.exports = router;

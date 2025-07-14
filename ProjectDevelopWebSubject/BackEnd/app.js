@@ -9,6 +9,7 @@ const nhanvienRouter = require("./app/routes/nhanvien.route");
 const docgiaRouter = require("./app/routes/docgia.route");
 const protectedController = require("./app/controllers/protect.controller");
 const session = require("express-session");
+const uploadRouter = require("./app/routes/upload.route");
 
 const app = express();
 
@@ -53,6 +54,7 @@ app.use(
   protectedController.isAdmin,
   docgiaRouter
 );
+app.use("/api/upload", uploadRouter);
 
 app.use((req, res, next) => {
   return next(new ApiError(404, "Resource not found"));

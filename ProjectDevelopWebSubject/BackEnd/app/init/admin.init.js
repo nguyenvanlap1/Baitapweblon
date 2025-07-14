@@ -6,22 +6,20 @@ async function ensureAdminAccountExists() {
   const nhanVienService = new NhanVienService(MongoDB.client);
 
   const admins = await nhanVienService.find({
-    role: "admin",
+    chucvu: "admin",
   });
-
   if (admins.length === 0) {
     const hashedPassword = await bcrypt.hash("admin123", 10);
 
     const adminData = {
+      _id: "admin1", // hoặc bạn dùng ObjectId, tùy bạn
       hotennv: "Quản trị viên",
       username: "admin",
       password: hashedPassword,
-      role: "admin",
-      email: "admin@example.com",
-      chucvu: "Quản trị viên",
+      chucvu: "admin",
       diachi: "123 Admin Street",
       sodienthoai: "0123456789",
-      _id: "001",
+      email: "admin@example.com",
     };
 
     await nhanVienService.create(adminData);

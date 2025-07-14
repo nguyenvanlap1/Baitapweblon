@@ -5,7 +5,17 @@ const ApiError = require("../api-error");
 exports.create = async (req, res, next) => {
   try {
     const sachService = new SachService(MongoDB.client);
-    const result = await sachService.create(req.body);
+
+    // Lấy thông tin từ form
+    const data = req.body;
+
+    // Nếu có ảnh thì lưu tên file vào data.image
+    if (req.file) {
+      data.image = req.file.path; // Đây là URL ảnh trên Cloudinary
+      // lưu tên file (hoặc full path nếu bạn muốn)
+    }
+
+    const result = await sachService.create(data);
     res.status(201).send(result);
   } catch (error) {
     return next(new ApiError(500, error.message));
@@ -50,21 +60,38 @@ exports.findOne = async (req, res, next) => {
 };
 
 exports.update = async (req, res, next) => {
-  if (Object.keys(req.body).length === 0) {
-    return next(new ApiError(400, "Data to update cannot be empty"));
+  console.log("req.file:", req.file); // 👈 xem có path / url không
+  if (Object.keys(req.body).length === 0 && !req.file) {
+    return next(new ApiError(400, "Dữ liệu cập nhật không được để trống"));
   }
+
   try {
     const sachService = new SachService(MongoDB.client);
-    const result = await sachService.update(req.params.id, req.body);
-    if (!result) {
-      return next(new ApiError(404, "Book not found"));
+    // Lấy dữ liệu hiện tại để giữ lại ảnh cũ nếu không có ảnh mới
+    const existing = await sachService.findById(req.params.id);
+    if (!existing || existing.length === 0) {
+      return next(new ApiError(404, "Không tìm thấy sách để cập nhật"));
     }
+
+    const updateData = req.body;
+    // Nếu có ảnh mới => dùng ảnh mới, nếu không thì giữ ảnh cũ
+    if (req.file) {
+      updateData.image = req.file.path; // đường dẫn ảnh mới từ Cloudinary
+    } else {
+      updateData.image = existing[0].image; // giữ ảnh cũ
+    }
+
+    const result = await sachService.update(req.params.id, updateData);
+    if (!result) {
+      return next(new ApiError(404, "Không cập nhật được sách"));
+    }
+
     return res.send(result);
   } catch (error) {
     return next(
       new ApiError(
         500,
-        `Error updating book with id=${req.params.id}: ${error}`
+        `Lỗi khi cập nhật sách có id=${req.params.id}: ${error}`
       )
     );
   }
