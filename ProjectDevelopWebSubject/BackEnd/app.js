@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
-app.use("/api/nhaxuatban", nhaxuatbanRouter); // protectedController.protected
+app.use("/api/nhaxuatban", nhaxuatbanRouter);
 app.use("/api/sach", sachRouter);
 app.use("/api/nhanvien", nhanvienRouter);
 app.use(
@@ -42,12 +42,7 @@ app.use(
   protectedController.protected,
   theodoimuonsachRouter
 );
-app.use(
-  "/api/docgia",
-  protectedController.protected,
-  protectedController.isAdmin,
-  docgiaRouter
-);
+app.use("/api/docgia", docgiaRouter);
 
 app.use((req, res, next) => {
   return next(new ApiError(404, "Resource not found"));

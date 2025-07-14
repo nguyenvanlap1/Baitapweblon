@@ -1,18 +1,18 @@
-import { fileURLToPath, URL } from 'node:url'
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueDevTools from 'vite-plugin-vue-devtools'
+import { fileURLToPath, URL } from "node:url";
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueDevTools from "vite-plugin-vue-devtools";
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueDevTools(),
-  ],
-  
+  plugins: [vue(), vueDevTools()],
+
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+  css: {
+    postcss: "./postcss.config.js", // hoặc để mặc định
   },
 
   server: {
