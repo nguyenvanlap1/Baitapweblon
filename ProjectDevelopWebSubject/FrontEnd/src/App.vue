@@ -47,3 +47,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.main-content-scrollable {
+  overflow-y: auto;
+  height: 100vh;
+  padding: 16px;
+}
+</style>

@@ -3,7 +3,7 @@ import authService from "../services/auth.service";
 
 const store = createStore({
   state: {
-    auth: { a: null },
+    auth: {}, // ✅ auth ban đầu rỗng
   },
   mutations: {
     setAuth(state, authData) {
@@ -14,9 +14,11 @@ const store = createStore({
     async fetchAuth({ commit }) {
       try {
         const auth = await authService.checkLogin();
-        commit("setAuth", auth); // Lưu dữ liệu auth vào state
+        console.log("Kiem tra dang nhap", auth);
+        commit("setAuth", auth); // Cập nhật auth vào state
       } catch (error) {
         console.error("Lỗi khi fetch auth:", error);
+        commit("setAuth", {}); // Nếu lỗi, reset auth
       }
     },
   },

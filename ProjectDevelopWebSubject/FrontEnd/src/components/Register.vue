@@ -125,12 +125,12 @@ export default {
         this.snackbarColor = "success";
         this.snackbar = true;
 
-        this.$emit("submit"); // Để đóng form từ cha
+        this.$emit("submit", { success: true });
       } catch (error) {
-        console.error("Đăng ký thất bại:", error);
-        this.snackbarMessage = "Đăng ký thất bại. Vui lòng thử lại.";
-        this.snackbarColor = "error";
-        this.snackbar = true;
+        this.$emit("submit", {
+          success: false,
+          message: "Đăng ký thất bại. Vui lòng thử lại.",
+        });
       }
     },
   },

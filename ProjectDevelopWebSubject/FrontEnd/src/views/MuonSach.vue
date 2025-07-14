@@ -1,9 +1,17 @@
 <template>
   <v-container fluid>
     <v-card>
-      <v-card-title class="headline background-gradient">Danh Sách Mượn Sách</v-card-title>
+      <v-card-title class="headline background-gradient"
+        >Danh Sách Mượn Sách</v-card-title
+      >
       <v-card-text>
-        <v-btn small color="primary" @click="isAdding = !isAdding" v-if="!isAdding">Thêm hoặc cập nhật</v-btn>
+        <v-btn
+          small
+          color="primary"
+          @click="isAdding = !isAdding"
+          v-if="!isAdding"
+          >Thêm hoặc cập nhật</v-btn
+        >
         <v-table>
           <thead>
             <tr>
@@ -18,7 +26,11 @@
           <tbody>
             <tr v-if="isAdding">
               <td colspan="7">
-                <MuonSachForm :form="form" @cancel="isAdding=false" @submit="create"></MuonSachForm>
+                <MuonSachForm
+                  :form="form"
+                  @cancel="isAdding = false"
+                  @submit="create"
+                ></MuonSachForm>
               </td>
             </tr>
             <template v-for="muonsach in muonsachs" :key="muonsach._id">
@@ -27,14 +39,27 @@
                 <td class="text-left">{{ muonsach.masach }}</td>
                 <td class="text-left">{{ muonsach.ngaymuon }}</td>
                 <td class="text-left">{{ muonsach.ngaytra }}</td>
-                <td class="text-left">{{ muonsach.manhanvien? "đã duyệt" : "chưa duyệt" }}</td>
                 <td class="text-left">
-                  <v-btn small color="primary" @click="deleteMuonSach(muonsach._id)" v-if="!muonsach.manhanvien">Xóa</v-btn>
+                  {{ muonsach.manhanvien ? "đã duyệt" : "chưa duyệt" }}
+                </td>
+                <td class="text-left">
+                  <v-btn
+                    small
+                    color="primary"
+                    @click="deleteMuonSach(muonsach._id)"
+                    v-if="!muonsach.manhanvien"
+                    >Xóa</v-btn
+                  >
                 </td>
               </tr>
               <tr v-if="editingId === muonsach._id">
                 <td colspan="7">
-                  <MuonSachForm :form="muonsach" :isUpdate="true" @cancel="editingId=null" @submit="updateMuonSach"></MuonSachForm>
+                  <MuonSachForm
+                    :form="muonsach"
+                    :isUpdate="true"
+                    @cancel="editingId = null"
+                    @submit="updateMuonSach"
+                  ></MuonSachForm>
                 </td>
               </tr>
             </template>
@@ -46,10 +71,10 @@
 </template>
 
 <script>
-import muonSachService from '../services/theodoimuonsach.service'; // Import service cho mượn sách
-import MyButton from '../components/MyButton.vue';
-import MuonSachForm from '../components/TheoDoiMuonSachForm.vue';
-import { mapGetters } from 'vuex';
+import muonSachService from "../services/theodoimuonsach.service"; // Import service cho mượn sách
+import MyButton from "../components/MyButton.vue";
+import MuonSachForm from "../components/TheoDoiMuonSachForm.vue";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
@@ -63,8 +88,8 @@ export default {
         masach: "",
         ngaymuon: "",
         ngaytra: "",
-        manhanvien: ""
-      }
+        manhanvien: "",
+      },
     };
   },
   components: {
@@ -74,19 +99,20 @@ export default {
   methods: {
     async create() {
       try {
+        
         await muonSachService.create(this.form);
         this.muonsachs = await muonSachService.findAll();
         this.isAdding = false;
       } catch (error) {
-        console.error('Lỗi khi thêm mượn sách:', error);
+        console.error("Lỗi khi thêm mượn sách:", error);
       }
     },
     async deleteMuonSach(_id) {
       try {
         await muonSachService.delete(_id);
-        this.muonsachs = await muonSachService.findByMadocgia('Lap');
+        this.muonsachs = await muonSachService.findByMadocgia("Lap");
       } catch (error) {
-        console.error('Lỗi khi xóa mượn sách:', error);
+        console.error("Lỗi khi xóa mượn sách:", error);
       }
     },
     editMuonSach(_id) {
@@ -98,19 +124,19 @@ export default {
         this.muonsachs = await muonSachService.findAll();
         this.editingId = null;
       } catch (error) {
-        console.error('Lỗi khi cập nhật mượn sách:', error);
+        console.error("Lỗi khi cập nhật mượn sách:", error);
       }
-    }
+    },
   },
   async mounted() {
     try {
-      this.muonsachs = await muonSachService.findByMadocgia('Lap');
+      this.muonsachs = await muonSachService.findByMadocgia(this.getAuth._id);
     } catch (error) {
-      console.error('Lỗi khi tải danh sách mượn sách:', error);
+      console.error("Lỗi khi tải danh sách mượn sách:", error);
     }
   },
   computed: {
-    ...mapGetters(['getAuth']), // Truy cập biến auth từ Vuex store
+    ...mapGetters(["getAuth"]), // Truy cập biến auth từ Vuex store
   },
 };
 </script>
@@ -122,7 +148,9 @@ export default {
   gap: 15px;
   width: 100%;
 }
-.small-width { max-width: 100px; /* Điều chỉnh chiều rộng */ }
+.small-width {
+  max-width: 100px; /* Điều chỉnh chiều rộng */
+}
 .background-gradient {
   background: linear-gradient(135deg, #ff7e5f, #feb47b);
   color: white;
