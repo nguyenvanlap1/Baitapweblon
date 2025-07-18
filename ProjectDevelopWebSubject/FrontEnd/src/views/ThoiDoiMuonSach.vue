@@ -1,7 +1,9 @@
 <template>
-  <v-container v-if="getAuth._id && getAuth.chucvu" fluid>
+  <v-container fluid>
     <v-card>
-      <v-card-title class="headline background-gradient">Danh Sách Mượn Sách</v-card-title>
+      <v-card-title class="headline background-gradient"
+        >Danh Sách Mượn Sách</v-card-title
+      >
       <v-card-text>
         <v-btn small color="primary" @click="toggleAddForm" v-if="!isAdding">
           Thêm hoặc cập nhật
@@ -35,12 +37,17 @@
                 <td class="text-left">{{ muonsach.masach }}</td>
                 <td class="text-left">{{ muonsach.ngaymuon }}</td>
                 <td class="text-left">{{ muonsach.ngaytra }}</td>
-                <td class="text-left">{{ muonsach.manhanvien || '-' }}</td>
+                <td class="text-left">{{ muonsach.manhanvien || "-" }}</td>
                 <td class="text-left">
                   <v-btn small color="error" @click="deleteMuonSach(muonsach)"
-                    >Xóa</v-btn>
-                  <v-btn small color="primary" @click="editMuonSach(muonsach._id)"
-                    >Chỉnh sửa</v-btn>
+                    >Xóa</v-btn
+                  >
+                  <v-btn
+                    small
+                    color="primary"
+                    @click="editMuonSach(muonsach._id)"
+                    >Chỉnh sửa</v-btn
+                  >
                   <v-btn
                     small
                     color="success"
@@ -142,7 +149,9 @@ export default {
         //   return;
         // }
 
-        const confirmDelete = confirm("Bạn có chắc chắn muốn xóa bản ghi mượn sách này?");
+        const confirmDelete = confirm(
+          "Bạn có chắc chắn muốn xóa bản ghi mượn sách này?"
+        );
         if (!confirmDelete) return;
 
         await muonSachService.delete(muonsach._id);
