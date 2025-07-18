@@ -33,7 +33,6 @@
           <!-- Nếu đã đăng nhập và là nhân viên -->
           <v-list-item
             class="custom-list-item"
-            v-if="getAuth._id && getAuth.chucvu"
             :to="'/theodoimuonsach'"
             prepend-icon="mdi-book-check"
             title="Theo dõi mượn sách"
