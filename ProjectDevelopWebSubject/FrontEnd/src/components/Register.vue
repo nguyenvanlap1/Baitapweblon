@@ -65,6 +65,17 @@
       <div class="mt-6 flex gap-4 justify-center">
         <MyButton type="submit" color="blue">Đăng ký</MyButton>
       </div>
+
+      <!-- Snackbar -->
+      <v-snackbar
+        v-model="snackbar"
+        :color="snackbarColor"
+        timeout="3000"
+        location="top center"
+        rounded
+      >
+        {{ snackbarMessage }}
+      </v-snackbar>
     </v-form>
   </v-container>
 </template>
@@ -72,7 +83,6 @@
 <script>
 import MyButton from "../components/MyButton.vue";
 import docgiaService from "../services/docgia.service";
-import authService from "../services/docgia.service"; // Giả định bạn có API này
 
 export default {
   components: {
@@ -89,6 +99,11 @@ export default {
       dienthoai: "",
       password: "",
       visible: false,
+
+      // Snackbar state
+      snackbar: false,
+      snackbarMessage: "",
+      snackbarColor: "success",
     };
   },
   methods: {
@@ -105,11 +120,17 @@ export default {
       };
 
       try {
-        const response = await docgiaService.create(docgia); // Đăng ký
-        console.log("Đăng ký thành công", response);
-        this.$emit("submit"); // Phát sự kiện cho cha nếu cần
+        const response = await docgiaService.create(docgia);
+        this.snackbarMessage = "Đăng ký thành công!";
+        this.snackbarColor = "success";
+        this.snackbar = true;
+
+        this.$emit("submit", { success: true });
       } catch (error) {
-        console.error("Đăng ký thất bại:", error);
+        this.$emit("submit", {
+          success: false,
+          message: "Đăng ký thất bại. Vui lòng thử lại.",
+        });
       }
     },
   },

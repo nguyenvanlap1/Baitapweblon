@@ -1,9 +1,17 @@
 <template>
-  <v-container fluid>
+  <v-container v-if="getAuth._id && getAuth.chucvu" fluid>
     <v-card>
-      <v-card-title class="headline background-gradient">Danh Sách Các Nhà Xuất Bản</v-card-title>
+      <v-card-title class="headline background-gradient"
+        >Danh Sách Các Nhà Xuất Bản</v-card-title
+      >
       <v-card-text>
-        <v-btn small color="primary" @click="isAdding = !isAdding" v-if="!isAdding">Thêm hoặc cập nhật</v-btn>
+        <v-btn
+          small
+          color="primary"
+          @click="isAdding = !isAdding"
+          v-if="!isAdding"
+          >Thêm hoặc cập nhật</v-btn
+        >
         <v-table>
           <thead>
             <tr>
@@ -16,7 +24,11 @@
           <tbody>
             <tr v-if="isAdding">
               <td colspan="4">
-                <NXBForm :form="form" @cancel="isAdding=false" @submit="create"></NXBForm>
+                <NXBForm
+                  :form="form"
+                  @cancel="isAdding = false"
+                  @submit="create"
+                ></NXBForm>
               </td>
             </tr>
             <template v-for="nxb in nxbs" :key="nxb._id">
@@ -25,13 +37,22 @@
                 <td class="text-left">{{ nxb.tennxb }}</td>
                 <td class="text-left">{{ nxb.diachi }}</td>
                 <td class="text-left">
-                  <v-btn small color="primary" @click="deleteNxb(nxb._id)">Xóa</v-btn>
-                  <v-btn small color="primary" @click="editNxb(nxb._id)">Chỉnh sửa</v-btn>
+                  <v-btn small color="primary" @click="deleteNxb(nxb._id)"
+                    >Xóa</v-btn
+                  >
+                  <v-btn small color="primary" @click="editNxb(nxb._id)"
+                    >Chỉnh sửa</v-btn
+                  >
                 </td>
               </tr>
               <tr v-if="editingId === nxb._id">
                 <td colspan="4">
-                  <NXBForm :form="nxb" :isUpdate="true" @cancel="editingId=null" @submit="updateNxb"></NXBForm>
+                  <NXBForm
+                    :form="nxb"
+                    :isUpdate="true"
+                    @cancel="editingId = null"
+                    @submit="updateNxb"
+                  ></NXBForm>
                 </td>
               </tr>
             </template>
@@ -43,9 +64,10 @@
 </template>
 
 <script>
-import nxbService from '../services/nxb.service';
-import MyButton from '../components/MyButton.vue';
-import NXBForm from '../components/NXBForm.vue';
+import nxbService from "../services/nxb.service";
+import MyButton from "../components/MyButton.vue";
+import NXBForm from "../components/NXBForm.vue";
+import { mapGetters } from "vuex/dist/vuex.cjs.js";
 
 export default {
   data() {
@@ -56,7 +78,7 @@ export default {
       form: {
         _id: "", // Thay đổi manxb thành _id
         tennxb: "",
-        diachi: ""
+        diachi: "",
       },
     };
   },
@@ -71,7 +93,7 @@ export default {
         this.nxbs = await nxbService.findAll();
         this.isAdding = false;
       } catch (error) {
-        console.error('Lỗi khi thêm nhà xuất bản:', error);
+        console.error("Lỗi khi thêm nhà xuất bản:", error);
       }
     },
     async deleteNxb(_id) {
@@ -79,7 +101,7 @@ export default {
         await nxbService.delete(_id);
         this.nxbs = await nxbService.findAll();
       } catch (error) {
-        console.error('Lỗi khi xóa nhà xuất bản:', error);
+        console.error("Lỗi khi xóa nhà xuất bản:", error);
       }
     },
     editNxb(_id) {
@@ -91,17 +113,20 @@ export default {
         this.nxbs = await nxbService.findAll();
         this.editingId = null;
       } catch (error) {
-        console.error('Lỗi khi cập nhật nhà xuất bản:', error);
+        console.error("Lỗi khi cập nhật nhà xuất bản:", error);
       }
-    }
+    },
   },
   async mounted() {
     try {
       this.nxbs = await nxbService.findAll();
     } catch (error) {
-      console.error('Lỗi khi tải danh sách nhà xuất bản:', error);
+      console.error("Lỗi khi tải danh sách nhà xuất bản:", error);
     }
-  }
+  },
+  computed: {
+    ...mapGetters(["getAuth"]),
+  },
 };
 </script>
 
@@ -112,7 +137,9 @@ export default {
   gap: 15px;
   width: 100%;
 }
-.small-width { max-width: 100px; /* Điều chỉnh chiều rộng */ }
+.small-width {
+  max-width: 100px; /* Điều chỉnh chiều rộng */
+}
 .background-gradient {
   background: linear-gradient(135deg, #ff7e5f, #feb47b);
   color: white;

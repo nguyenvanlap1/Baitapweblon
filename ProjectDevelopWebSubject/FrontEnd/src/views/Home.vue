@@ -50,7 +50,7 @@
                 <v-btn
                   small
                   color="primary"
-                  v-if="!this.getAuth.chucvu"
+                  v-if="this.getAuth._id"
                   @click="muonSach(sach._id)"
                   >Mượn sách</v-btn
                 >
@@ -86,7 +86,6 @@ import SachForm from "../components/SachForm.vue";
 import { mapGetters } from "vuex";
 import MuonTraForm from "../components/MuonTraForm.vue";
 import theodoimuonsachService from "../services/theodoimuonsach.service";
-
 export default {
   data() {
     return {
@@ -137,6 +136,12 @@ export default {
     },
     muonSach(_id) {
       this.editingId = _id;
+
+      // ✅ Reset lại form mượn sách mỗi lần chọn sách mới
+      this.formMuonSach = {
+        ngaymuon: "",
+        ngaytra: "",
+      };
     },
 
     async dangKyMuonSach(form) {
@@ -180,4 +185,6 @@ export default {
   },
 };
 </script>
+<style scoped></style>
+
 <style scoped></style>

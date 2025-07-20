@@ -1,15 +1,19 @@
 <template>
-  <v-container class="rounded-xl">
-    <v-form @submit.prevent="handleSubmit">
-      <div width="100%">
+  <v-container>
+    <v-form
+      @submit.prevent="handleSubmit"
+      class="max-w-md mx-auto bg-white rounded-xl p-4"
+    >
+      <div class="flex flex-col gap-4">
         <v-text-field
           v-model="_id"
-          label="MSNV"
+          label="Nhập Id"
           variant="outlined"
           required
         ></v-text-field>
+
         <v-text-field
-          label="Mật khẩu"
+          label="Nhập mật khẩu"
           v-model="password"
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
           :type="visible ? 'text' : 'password'"
@@ -19,7 +23,10 @@
           @click:append-inner="visible = !visible"
           required
         ></v-text-field>
-        <MyButton type="submit" color="blue">Gửi</MyButton>
+      </div>
+
+      <div class="mt-6 flex justify-center">
+        <MyButton type="submit" color="blue">Đăng nhập</MyButton>
       </div>
     </v-form>
   </v-container>
@@ -50,9 +57,12 @@ export default {
         });
         await this.$store.dispatch("fetchAuth");
         console.log(response); // Kiểm tra phản hồi từ server
-        this.$emit("submit");
+        this.$emit("submit", { success: true });
       } catch (error) {
-        console.log(error); // Kiểm tra lỗi
+        this.$emit("submit", {
+          success: false,
+          message: "Tài khoản hoặc mật khẩu không đúng.",
+        });
       }
     },
   },

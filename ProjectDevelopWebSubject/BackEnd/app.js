@@ -9,14 +9,12 @@ const nhanvienRouter = require("./app/routes/nhanvien.route");
 const docgiaRouter = require("./app/routes/docgia.route");
 const protectedController = require("./app/controllers/protect.controller");
 const session = require("express-session");
-const uploadRouter = require("./app/routes/upload.route");
-
 const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:4000", // Cho phép từ nguồn localhost:3001
-    credentials: true, // Cho phép gửi credentials (cookies, headers xác thực, v.v.)
+    origin: "http://localhost:4000",
+    credentials: true,
   })
 );
 
@@ -38,18 +36,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/nhaxuatban", nhaxuatbanRouter);
 app.use("/api/sach", sachRouter);
 app.use("/api/nhanvien", nhanvienRouter);
-app.use(
-  "/api/theodoimuonsach",
-  protectedController.protected,
-  theodoimuonsachRouter
-);
-app.use(
-  "/api/docgia",
-  // protectedController.protected,
-  // protectedController.isAdmin,
-  docgiaRouter
-);
-app.use("/api/upload", uploadRouter);
+app.use("/api/theodoimuonsach", theodoimuonsachRouter);
+app.use("/api/docgia", docgiaRouter);
 
 app.use((req, res, next) => {
   return next(new ApiError(404, "Resource not found"));

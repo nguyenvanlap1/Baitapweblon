@@ -1,8 +1,8 @@
 <template>
-  <v-container fluid>
+  <v-container v-if="getAuth._id" fluid>
     <v-card>
       <v-card-title class="headline background-gradient"
-        >Danh Sách Sách</v-card-title
+        >Danh sách Sách</v-card-title
       >
       <v-card-text>
         <v-btn
@@ -28,6 +28,11 @@
           <tbody>
             <tr v-if="isAdding">
               <td colspan="8">
+                <SachForm
+                  :form="form"
+                  @cancel="isAdding = false"
+                  @submit="create"
+                ></SachForm>
                 <SachForm
                   :form="form"
                   @cancel="isAdding = false"
@@ -106,7 +111,7 @@ export default {
         namxuatban: "",
         manhaxuatban: "",
         nguongoc_tacgia: "",
-        image: "", // ✅ đã có, đúng rồi
+        image: "", // ✅ đã có, đúng rồi,
       },
       formMuonSach: {
         ngaymuon: "",
@@ -127,6 +132,7 @@ export default {
         this.isAdding = false;
       } catch (error) {
         console.error("Lỗi khi thêm sách:", error);
+        console.error("Lỗi khi thêm sách:", error);
       }
     },
     async deleteSach(_id) {
@@ -134,6 +140,7 @@ export default {
         await sachService.delete(_id);
         this.sachs = await sachService.findAll();
       } catch (error) {
+        console.error("Lỗi khi xóa sách:", error);
         console.error("Lỗi khi xóa sách:", error);
       }
     },
@@ -163,13 +170,12 @@ export default {
         ngaymuon,
         ngaytra,
         masach: this.editingId,
-        ngaymuon,
-        ngaytra,
         madocgia: this.getAuth._id,
       };
       try {
-        console.log(await theodoimuonsachService.create(payload));
+        console.log("🔎 Form chuẩn bị gửi:", payload);
         alert("đã đăng ký thành công");
+        await theodoimuonsachService.create(payload);
         this.editingId = null;
       } catch (error) {
         console.log(error);
@@ -188,12 +194,15 @@ export default {
   },
   async mounted() {
     try {
+      //console.log("Auth trong SachList:", this.getAuth);
       this.sachs = await sachService.findAll();
     } catch (error) {
+      console.error("Lỗi khi tải danh sách sách:", error);
       console.error("Lỗi khi tải danh sách sách:", error);
     }
   },
   computed: {
+    ...mapGetters(["getAuth"]), // Truy cập biến auth từ Vuex store
     ...mapGetters(["getAuth"]), // Truy cập biến auth từ Vuex store
   },
 };
@@ -204,6 +213,9 @@ export default {
   flex-direction: row;
   gap: 15px;
   width: 100%;
+}
+.small-width {
+  max-width: 100px; /* Điều chỉnh chiều rộng */
 }
 .small-width {
   max-width: 100px; /* Điều chỉnh chiều rộng */

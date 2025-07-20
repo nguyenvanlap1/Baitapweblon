@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; display: block;">
+  <div style="width: 100%; display: block">
     <v-form @submit.prevent="handleSubmit">
       <div class="form-horizontal">
         <!-- Ngày Mượn -->
@@ -27,7 +27,8 @@
 </template>
 
 <script>
-import MyButton from './MyButton.vue';
+import MyButton from "./MyButton.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MuonTraForm",
@@ -54,6 +55,9 @@ export default {
       this.$emit("cancel");
     },
   },
+  computed: {
+    ...mapGetters(["getAuth"]),
+  },
 };
 </script>
 
@@ -62,7 +66,8 @@ export default {
 .form-horizontal {
   display: flex;
   flex-direction: row;
-  gap: 10px; /* Khoảng cách giữa các trường */
+  flex-wrap: wrap; /* ✅ Cho phép xuống hàng */
+  gap: 10px;
   align-items: center;
   width: 100%;
 }

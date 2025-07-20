@@ -1,9 +1,17 @@
 <template>
   <v-container fluid>
-    <v-card >
-      <v-card-title class="headline background-gradient">Danh Sách Độc Giả</v-card-title>
+    <v-card>
+      <v-card-title class="headline background-gradient"
+        >Danh Sách Độc Giả</v-card-title
+      >
       <v-card-text>
-        <v-btn small color="primary" @click="isAdding = !isAdding" v-if="!isAdding">Thêm hoặc cập nhật</v-btn>
+        <v-btn
+          small
+          color="primary"
+          @click="isAdding = !isAdding"
+          v-if="!isAdding"
+          >Thêm hoặc cập nhật</v-btn
+        >
         <v-table>
           <thead>
             <tr>
@@ -20,7 +28,11 @@
           <tbody>
             <tr v-if="isAdding">
               <td colspan="8">
-                <DocGiaForm :form="form" @cancel="isAdding=false" @submit="create"></DocGiaForm>
+                <DocGiaForm
+                  :form="form"
+                  @cancel="isAdding = false"
+                  @submit="create"
+                ></DocGiaForm>
               </td>
             </tr>
             <template v-for="docgia in docgias" :key="docgia._id">
@@ -33,13 +45,22 @@
                 <td class="text-left">{{ docgia.diachi }}</td>
                 <td class="text-left">{{ docgia.dienthoai }}</td>
                 <td class="text-left">
-                  <v-btn small color="primary" @click="deleteDocGia(docgia._id)">Xóa</v-btn>
-                  <v-btn small color="primary" @click="editDocGia(docgia._id)">Chỉnh sửa</v-btn>
+                  <v-btn small color="primary" @click="deleteDocGia(docgia._id)"
+                    >Xóa</v-btn
+                  >
+                  <v-btn small color="primary" @click="editDocGia(docgia._id)"
+                    >Chỉnh sửa</v-btn
+                  >
                 </td>
               </tr>
               <tr v-if="editingId === docgia._id">
                 <td colspan="8">
-                  <DocGiaForm :form="docgia" :isUpdate="true" @cancel="editingId=null" @submit="updateDocGia"></DocGiaForm>
+                  <DocGiaForm
+                    :form="docgia"
+                    :isUpdate="true"
+                    @cancel="editingId = null"
+                    @submit="updateDocGia"
+                  ></DocGiaForm>
                 </td>
               </tr>
             </template>
@@ -51,9 +72,10 @@
 </template>
 
 <script>
-import docGiaService from '../services/docgia.service';
-import MyButton from '../components/MyButton.vue';
-import DocGiaForm from '../components/DocGiaForm.vue';
+import docGiaService from "../services/docgia.service";
+import MyButton from "../components/MyButton.vue";
+import DocGiaForm from "../components/DocGiaForm.vue";
+import { mapGetters } from "vuex/dist/vuex.cjs.js";
 
 export default {
   data() {
@@ -69,8 +91,8 @@ export default {
         ngaysinh: "",
         phai: "",
         diachi: "",
-        dienthoai: ""
-      }
+        dienthoai: "",
+      },
     };
   },
   components: {
@@ -84,7 +106,7 @@ export default {
         this.docgias = await docGiaService.findAll();
         this.isAdding = false;
       } catch (error) {
-        console.error('Lỗi khi thêm độc giả:', error);
+        console.error("Lỗi khi thêm độc giả:", error);
       }
     },
     async deleteDocGia(_id) {
@@ -92,7 +114,7 @@ export default {
         await docGiaService.delete(_id);
         this.docgias = await docGiaService.findAll();
       } catch (error) {
-        console.error('Lỗi khi xóa độc giả:', error);
+        console.error("Lỗi khi xóa độc giả:", error);
       }
     },
     editDocGia(_id) {
@@ -104,17 +126,20 @@ export default {
         this.docgias = await docGiaService.findAll();
         this.editingId = null;
       } catch (error) {
-        console.error('Lỗi khi cập nhật độc giả:', error);
+        console.error("Lỗi khi cập nhật độc giả:", error);
       }
-    }
+    },
   },
   async mounted() {
     try {
       this.docgias = await docGiaService.findAll();
     } catch (error) {
-      console.error('Lỗi khi tải danh sách độc giả:', error);
+      console.error("Lỗi khi tải danh sách độc giả:", error);
     }
-  }
+  },
+  computed: {
+    ...mapGetters(["getAuth"]),
+  },
 };
 </script>
 
@@ -125,7 +150,9 @@ export default {
   gap: 15px;
   width: 100%;
 }
-.small-width { max-width: 100px; /* Điều chỉnh chiều rộng */ }
+.small-width {
+  max-width: 100px; /* Điều chỉnh chiều rộng */
+}
 .background-gradient {
   background: linear-gradient(135deg, #ff7e5f, #feb47b);
   color: white;
