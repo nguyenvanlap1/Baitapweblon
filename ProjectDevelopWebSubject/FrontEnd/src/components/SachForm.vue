@@ -1,79 +1,116 @@
 <template>
   <div style="width: 100%; display: block">
-    <v-form @submit.prevent="handleSubmit">
-      <div class="form-grid">
-        <v-text-field
-          :disabled="isUpdate"
-          v-model="form._id"
-          label="Mã Sách"
-          required
-        >
-        </v-text-field>
-        <v-text-field
-          v-model="form.tensach"
-          label="Tên Sách"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="form.dongia"
-          label="Đơn Giá"
-          type="number"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="form.soquyen"
-          label="Số Quyển"
-          type="number"
-          required
-        ></v-text-field>
-        <v-text-field
-          v-model="form.namxuatban"
-          label="Năm Xuất Bản"
-          type="number"
-          required
-        ></v-text-field>
+    <v-card class="pa-4 elevation-2">
+      <v-form @submit.prevent="handleSubmit">
+        <v-row dense>
+          <v-col cols="12" md="6">
+            <v-text-field
+              :disabled="isUpdate"
+              v-model="form._id"
+              label="Mã Sách"
+              outlined
+              dense
+              required
+            />
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.tensach"
+              label="Tên Sách"
+              outlined
+              dense
+              required
+            />
+          </v-col>
 
-        <!-- Sử dụng v-autocomplete cho manxb -->
-        <v-autocomplete
-          v-model="form.manhaxuatban"
-          :items="publishers"
-          item-value="id"
-          item-text="name"
-          label="Mã Nhà Xuất Bản"
-          required
-          clearable
-          outlined
-          dense
-        ></v-autocomplete>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.dongia"
+              label="Đơn Giá"
+              type="number"
+              outlined
+              dense
+              required
+            />
+          </v-col>
 
-        <v-text-field
-          v-model="form.nguongoc_tacgia"
-          label="Nguồn Gốc/Tác Giả"
-          required
-        ></v-text-field>
-        <v-file-input
-          label="Hình ảnh"
-          accept="image/*"
-          prepend-icon="mdi-camera"
-          @change="onFileChange"
-          dense
-          outlined
-          clearable
-        ></v-file-input>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.soquyen"
+              label="Số Quyển"
+              type="number"
+              outlined
+              dense
+              required
+            />
+          </v-col>
 
-        <!-- Xem trước ảnh -->
-        <v-img
-          v-if="previewImage"
-          :src="previewImage"
-          max-width="150"
-          class="mt-2"
-        ></v-img>
-      </div>
-      <div class="button-container">
-        <MyButton type="submit" color="primary">Gửi</MyButton>
-        <MyButton @click="cancel">Hủy</MyButton>
-      </div>
-    </v-form>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.namxuatban"
+              label="Năm Xuất Bản"
+              type="number"
+              outlined
+              dense
+              required
+            />
+          </v-col>
+
+          <v-col cols="12" md="6">
+            <v-autocomplete
+              v-model="form.manhaxuatban"
+              :items="publishers"
+              item-text="name"
+              item-value="_id"
+              label="Mã Nhà Xuất Bản"
+              outlined
+              dense
+              clearable
+              required
+            />
+          </v-col>
+
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="form.nguongoc_tacgia"
+              label="Nguồn Gốc/Tác Giả"
+              outlined
+              dense
+              required
+            />
+          </v-col>
+
+          <v-col cols="12" md="6">
+            <v-file-input
+              label="Hình ảnh (jpg/png)"
+              accept="image/*"
+              prepend-icon="mdi-camera"
+              outlined
+              dense
+              clearable
+              @change="onFileChange"
+            />
+            <v-img
+              v-if="previewImage"
+              :src="previewImage"
+              max-height="150"
+              max-width="150"
+              class="mt-2 rounded mx-auto"
+              contain
+            />
+          </v-col>
+
+          <v-col cols="12" class="text-right">
+            <MyButton type="submit" color="primary">
+              <v-icon left>mdi-content-save</v-icon> Gửi
+            </MyButton>
+            <MyButton @click="cancel" color="error">
+              <v-icon left>mdi-cancel</v-icon> Hủy
+            </MyButton>
+          </v-col>
+        </v-row>
+      </v-form>
+    </v-card>
   </div>
 </template>
 
@@ -146,6 +183,11 @@ export default {
   grid-template-columns: repeat(2, 1fr); /* Hai cột, mỗi cột chiếm 50% */
   gap: 10px; /* Khoảng cách giữa các trường */
   width: 100%;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
 }
 
 .button-container {

@@ -5,31 +5,36 @@
         >Danh Sách Sách</v-card-title
       >
       <v-card-text>
-        <v-btn
+        <!-- <v-btn
           small
           color="primary"
           @click="isAdding = !isAdding"
           v-if="!isAdding && this.getAuth.chucvu"
           >Thêm hoặc cập nhật</v-btn
         >
-        <v-row dense>
-          <v-col cols="12" sm="6" md="4" v-for="sach in sachs" :key="sach._id">
-            <v-card outlined>
+        <SachForm
+          v-if="this.getAuth.chucvu && isAdding"
+          :form="form"
+          :isAdding="true"
+          @cancel="editingId = null"
+          @submit="create"
+        ></SachForm> -->
+        <div class="masonry-container">
+          <div class="masonry-item" v-for="sach in sachs" :key="sach._id">
+            <v-card outlined class="mb-4">
               <v-img
                 v-if="sach.image"
                 :src="sach.image"
                 max-height="200"
-                class="white--text align-end"
                 cover
-              >
-              </v-img>
+              ></v-img>
               <v-card-title class="text-h6">{{ sach.tensach }}</v-card-title>
               <v-card-subtitle>Mã Sách: {{ sach._id }}</v-card-subtitle>
               <v-card-text>
                 <div>Đơn Giá: {{ sach.dongia }}</div>
                 <div>Số Quyển: {{ sach.soquyen }}</div>
                 <div>Năm Xuất Bản: {{ sach.namxuatban }}</div>
-                <div>Mã Nhà Xuất Bản: {{ sach.manhaxuatban }}</div>
+                <div>Mã NXB: {{ sach.manhaxuatban }}</div>
                 <div>Nguồn Gốc/Tác Giả: {{ sach.nguongoc_tacgia }}</div>
               </v-card-text>
               <v-card-actions>
@@ -50,7 +55,7 @@
                 <v-btn
                   small
                   color="primary"
-                  v-if="this.getAuth._id"
+                  v-if="this.getAuth._id && !this.getAuth.chucvu"
                   @click="muonSach(sach._id)"
                   >Mượn sách</v-btn
                 >
@@ -65,6 +70,7 @@
                     @submit="updateSach"
                   ></SachForm>
                   <MuonTraForm
+                    v-if="!this.getAuth.chucvu"
                     :form="formMuonSach"
                     @cancel="editingId = null"
                     @submit="dangKyMuonSach"
@@ -72,8 +78,8 @@
                 </v-card-text>
               </v-expand-transition>
             </v-card>
-          </v-col>
-        </v-row>
+          </div>
+        </div>
       </v-card-text>
     </v-card>
   </v-container>
@@ -185,6 +191,31 @@ export default {
   },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.masonry-container {
+  column-count: 3;
+  column-gap: 1rem;
+}
 
-<style scoped></style>
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}
+
+.masonry-container {
+  column-count: 1;
+  column-gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .masonry-container {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 960px) {
+  .masonry-container {
+    column-count: 3;
+  }
+}
+</style>

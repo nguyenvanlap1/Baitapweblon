@@ -33,11 +33,11 @@
                   @cancel="isAdding = false"
                   @submit="create"
                 ></SachForm>
-                <SachForm
+                <!-- <SachForm
                   :form="form"
                   @cancel="isAdding = false"
                   @submit="create"
-                ></SachForm>
+                ></SachForm> -->
               </td>
             </tr>
             <template v-for="sach in sachs" :key="sach._id">
