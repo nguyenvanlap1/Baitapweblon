@@ -45,8 +45,8 @@ app.use(
 );
 app.use(
   "/api/docgia",
-  protectedController.protected,
-  protectedController.isAdmin,
+  // protectedController.protected,
+  // protectedController.isAdmin,
   docgiaRouter
 );
 app.use("/api/upload", uploadRouter);
