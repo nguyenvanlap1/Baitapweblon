@@ -66,7 +66,8 @@ export default {
 .form-horizontal {
   display: flex;
   flex-direction: row;
-  gap: 10px; /* Khoảng cách giữa các trường */
+  flex-wrap: wrap; /* ✅ Cho phép xuống hàng */
+  gap: 10px;
   align-items: center;
   width: 100%;
 }

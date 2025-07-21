@@ -8,6 +8,7 @@ import NhanVien from "../views/NhanVien.vue";
 import TheoDoiMuonSach from "../views/ThoiDoiMuonSach.vue";
 import MuonSach from "../views/MuonSach.vue";
 import ThongTinCaNhan from "../views/ThongTinCaNhan.vue";
+import TheoDoiSachDocGia from "../views/TheoDoiSachDocGia.vue";
 
 const routes = [
   {
@@ -25,7 +26,6 @@ const routes = [
     name: "nxb",
     component: NXB,
   },
-
   {
     path: "/docgia",
     name: "docgia",
@@ -56,7 +56,11 @@ const routes = [
     name: "muonsach",
     component: MuonSach,
   },
-
+  {
+    path: "/docgia/theo-doi",
+    name: "TheoDoiSachDocGia",
+    component: TheoDoiSachDocGia,
+  },
   {
     path: "/:pathMatch(.*)*",
     name: "notfound",

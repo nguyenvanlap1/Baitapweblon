@@ -22,6 +22,7 @@
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+
           <!-- Home -->
           <v-list-item
             class="custom-list-item"
@@ -31,6 +32,7 @@
           ></v-list-item>
 
           <v-list-item
+            v-if="getAuth._id && getAuth.chucvu"
             class="custom-list-item"
             :to="'/theodoimuonsach'"
             prepend-icon="mdi-book-check"
@@ -52,6 +54,14 @@
             prepend-icon="mdi-book"
             title="Sách"
           ></v-list-item>
+
+          <v-list-item
+            to="/docgia/theo-doi"
+            v-if="getAuth._id && !getAuth.chucvu"
+            prepend-icon="mdi-history"
+            title="Theo dõi sách đã mượn"
+          >
+          </v-list-item>
 
           <v-list-item
             class="custom-list-item"

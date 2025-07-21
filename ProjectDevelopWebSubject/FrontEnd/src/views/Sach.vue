@@ -33,6 +33,11 @@
                   @cancel="isAdding = false"
                   @submit="create"
                 ></SachForm>
+                <!-- <SachForm
+                  :form="form"
+                  @cancel="isAdding = false"
+                  @submit="create"
+                ></SachForm> -->
               </td>
             </tr>
             <template v-for="sach in sachs" :key="sach._id">
@@ -70,11 +75,11 @@
               <tr v-if="editingId === sach._id && this.getAuth.chucvu">
                 <td colspan="8">
                   <SachForm
-                    :form="sach"
+                    :form="form"
                     :isUpdate="true"
                     @cancel="editingId = null"
                     @submit="updateSach"
-                  ></SachForm>
+                  />
                 </td>
               </tr>
             </template>
@@ -106,6 +111,7 @@ export default {
         namxuatban: "",
         manhaxuatban: "",
         nguongoc_tacgia: "",
+        image: "", // ✅ đã có, đúng rồi,
       },
       formMuonSach: {
         ngaymuon: "",
@@ -126,6 +132,7 @@ export default {
         this.isAdding = false;
       } catch (error) {
         console.error("Lỗi khi thêm sách:", error);
+        console.error("Lỗi khi thêm sách:", error);
       }
     },
     async deleteSach(_id) {
@@ -134,10 +141,24 @@ export default {
         this.sachs = await sachService.findAll();
       } catch (error) {
         console.error("Lỗi khi xóa sách:", error);
+        console.error("Lỗi khi xóa sách:", error);
       }
     },
     editSach(_id) {
-      this.editingId = _id;
+      const selected = this.sachs.find((s) => s._id === _id);
+      if (selected) {
+        this.form = {
+          _id: selected._id, // giữ nguyên id
+          tensach: selected.tensach,
+          dongia: selected.dongia,
+          soquyen: selected.soquyen,
+          namxuatban: selected.namxuatban,
+          manhaxuatban: selected.manhaxuatban,
+          nguongoc_tacgia: selected.nguongoc_tacgia,
+          image: "", // reset ảnh để người dùng chọn lại
+        };
+        this.editingId = _id;
+      }
     },
     muonSach(_id) {
       this.editingId = _id;
@@ -177,9 +198,11 @@ export default {
       this.sachs = await sachService.findAll();
     } catch (error) {
       console.error("Lỗi khi tải danh sách sách:", error);
+      console.error("Lỗi khi tải danh sách sách:", error);
     }
   },
   computed: {
+    ...mapGetters(["getAuth"]), // Truy cập biến auth từ Vuex store
     ...mapGetters(["getAuth"]), // Truy cập biến auth từ Vuex store
   },
 };
@@ -190,6 +213,9 @@ export default {
   flex-direction: row;
   gap: 15px;
   width: 100%;
+}
+.small-width {
+  max-width: 100px; /* Điều chỉnh chiều rộng */
 }
 .small-width {
   max-width: 100px; /* Điều chỉnh chiều rộng */
