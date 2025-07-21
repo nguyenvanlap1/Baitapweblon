@@ -39,8 +39,8 @@
 
   <v-dialog v-model="dialog" max-width="500px">
     <v-card class="p-0 rounded-xl overflow-hidden">
-      <v-card-title class="text-center pt-4 pb-0">Đăng nhập</v-card-title>
-      <v-card-text class="px-4 pt-2 pb-6">
+      <v-card-title class="text-center py-2 font-bold">Đăng nhập</v-card-title>
+      <v-card-text class="px-2">
         <Login @submit="handleLoginSuccess" />
       </v-card-text>
     </v-card>
@@ -48,10 +48,10 @@
 
   <v-dialog v-model="registerForm" max-width="500px">
     <v-card class="p-0 rounded-xl overflow-hidden">
-      <v-card-title class="text-center pt-4 pb-0"
+      <v-card-title class="text-center py-2 font-bold"
         >Đăng ký tài khoản</v-card-title
       >
-      <v-card-text class="px-4 pt-2 pb-6">
+      <v-card-text class="px-2">
         <Register @submit="handleRegisterSuccess" />
       </v-card-text>
     </v-card>

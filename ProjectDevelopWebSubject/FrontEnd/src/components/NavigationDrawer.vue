@@ -56,6 +56,7 @@
           ></v-list-item>
 
           <v-list-item
+            class="custom-list-item"
             to="/docgia/theo-doi"
             v-if="getAuth._id && !getAuth.chucvu"
             prepend-icon="mdi-history"
@@ -93,7 +94,7 @@
             v-if="getAuth._id && !getAuth.chucvu"
             :to="'/thongtincanhan'"
             prepend-icon="mdi-account-circle"
-            title="Thônng tin cá nhân"
+            title="Thông tin cá nhân"
           ></v-list-item>
 
           <v-list-item
@@ -154,11 +155,10 @@ export default {
   font-weight: 500;
 }
 
-/* ✅ Icon & chữ cùng chỉnh cỡ - dùng ::v-deep cho scoped CSS */
 .custom-list-item ::v-deep(.v-icon) {
-  font-size: 24px;
+  font-size: 19px;
   color: #1f2937;
-  margin-right: 5px; /* Giảm khoảng cách giữa icon và chữ */
+  margin-right: 1px; /* Giảm khoảng cách giữa icon và chữ */
 }
 
 .custom-list-item ::v-deep(.v-list-item-title) {
@@ -167,7 +167,6 @@ export default {
   font-weight: 500;
 }
 
-/* ✅ Nền và font */
 .custom-drawer {
   background-color: #e0e2e6 !important;
 }

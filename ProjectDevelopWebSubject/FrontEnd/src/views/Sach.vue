@@ -8,6 +8,7 @@
         <v-btn
           small
           color="primary"
+          class="my-4"
           @click="isAdding = !isAdding"
           v-if="!isAdding && this.getAuth.chucvu"
           >Thêm hoặc cập nhật</v-btn
@@ -50,7 +51,7 @@
                 <td class="text-left">{{ sach.manhaxuatban }}</td>
                 <td class="text-left">{{ sach.nguongoc_tacgia }}</td>
                 <td class="text-left" v-if="this.getAuth.chucvu">
-                  <v-btn small color="primary" @click="deleteSach(sach._id)"
+                  <v-btn small color="error" @click="deleteSach(sach._id)"
                     >Xóa</v-btn
                   >
                   <v-btn small color="primary" @click="editSach(sach._id)"

@@ -7,6 +7,7 @@
       <v-card-text>
         <v-btn
           small
+          class="my-4"
           color="primary"
           @click="isAdding = !isAdding"
           v-if="!isAdding"
@@ -37,7 +38,7 @@
                 <td class="text-left">{{ nxb.tennxb }}</td>
                 <td class="text-left">{{ nxb.diachi }}</td>
                 <td class="text-left">
-                  <v-btn small color="primary" @click="deleteNxb(nxb._id)"
+                  <v-btn small color="error" @click="deleteNxb(nxb._id)"
                     >Xóa</v-btn
                   >
                   <v-btn small color="primary" @click="editNxb(nxb._id)"

@@ -7,6 +7,7 @@
       <v-card-text>
         <v-btn
           small
+          class="my-4"
           color="primary"
           @click="isAdding = !isAdding"
           v-if="!isAdding"
@@ -45,7 +46,7 @@
                 <td class="text-left">{{ docgia.diachi }}</td>
                 <td class="text-left">{{ docgia.dienthoai }}</td>
                 <td class="text-left">
-                  <v-btn small color="primary" @click="deleteDocGia(docgia._id)"
+                  <v-btn small color="error" @click="deleteDocGia(docgia._id)"
                     >Xóa</v-btn
                   >
                   <v-btn small color="primary" @click="editDocGia(docgia._id)"

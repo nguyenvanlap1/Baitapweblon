@@ -7,6 +7,7 @@
       <v-card-text>
         <v-btn
           small
+          class="my-4"
           color="primary"
           @click="isAdding = !isAdding"
           v-if="!isAdding"
@@ -45,7 +46,7 @@
                 <td class="text-left">
                   <v-btn
                     small
-                    color="primary"
+                    color="error"
                     @click="deleteMuonSach(muonsach._id)"
                     v-if="!muonsach.manhanvien"
                     >Xóa</v-btn
@@ -99,7 +100,6 @@ export default {
   methods: {
     async create() {
       try {
-        
         await muonSachService.create(this.form);
         this.muonsachs = await muonSachService.findAll();
         this.isAdding = false;

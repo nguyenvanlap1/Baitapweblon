@@ -2,9 +2,9 @@
   <v-container>
     <v-form
       @submit.prevent="handleSubmit"
-      class="max-w-md mx-auto bg-white rounded-xl p-4"
+      class="max-w-md mx-auto bg-white rounded-xl p-2"
     >
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-2">
         <v-text-field
           v-model="_id"
           label="Nhập Id"
