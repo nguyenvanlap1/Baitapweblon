@@ -148,3 +148,21 @@ exports.logout = (req, res, next) => {
     res.status(400).send({ message: "No user is currently logged in" });
   }
 };
+
+exports.changePassword = async (req, res, next) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const id = req.params.id;
+
+    const docGiaService = new DocGiaService(MongoDB.client);
+    const result = await docGiaService.changePassword(
+      id,
+      oldPassword,
+      newPassword
+    );
+
+    res.send({ success: true, message: "Đổi mật khẩu thành công" });
+  } catch (error) {
+    next(new ApiError(500, error.message));
+  }
+};

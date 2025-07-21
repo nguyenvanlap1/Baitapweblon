@@ -30,7 +30,6 @@
             title="Trang chủ"
           ></v-list-item>
 
-          <!-- Nếu đã đăng nhập và là nhân viên -->
           <v-list-item
             class="custom-list-item"
             :to="'/theodoimuonsach'"
@@ -79,7 +78,14 @@
             title="Nhân viên"
           ></v-list-item>
 
-          <!-- Ai cũng có thể thấy nếu đăng nhập -->
+          <v-list-item
+            class="custom-list-item"
+            v-if="getAuth._id && !getAuth.chucvu"
+            :to="'/thongtincanhan'"
+            prepend-icon="mdi-account-circle"
+            title="Thônng tin cá nhân"
+          ></v-list-item>
+
           <v-list-item
             class="custom-list-item"
             v-if="getAuth._id"

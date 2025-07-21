@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; display: block;">
+  <div style="width: 100%; display: block">
     <v-form @submit.prevent="handleSubmit">
       <div class="form-horizontal">
         <!-- Mã Độc Giả -->
@@ -16,7 +16,7 @@
         ></v-autocomplete>
 
         <!-- Mã Sách -->
-         <v-autocomplete
+        <v-autocomplete
           v-model="form.masach"
           :items="masachs"
           item-value="_id"
@@ -29,29 +29,29 @@
         ></v-autocomplete>
 
         <!-- Ngày Mượn -->
-        <v-text-field 
-          v-model="form.ngaymuon" 
-          label="Ngày Mượn" 
-          type="date" 
-          required 
+        <v-text-field
+          v-model="form.ngaymuon"
+          label="Ngày Mượn"
+          type="date"
+          required
           class="default"
         ></v-text-field>
 
         <!-- Ngày Trả -->
-        <v-text-field 
-          v-model="form.ngaytra" 
-          label="Ngày Trả" 
-          type="date" 
-          required 
+        <v-text-field
+          v-model="form.ngaytra"
+          label="Ngày Trả"
+          type="date"
+          required
           class="default"
         ></v-text-field>
 
         <!-- Mã Nhân Viên -->
-        <v-text-field 
-          :disabled="true" 
-          v-model="manhanvien" 
-          label="Mã Nhân Viên" 
-          required 
+        <v-text-field
+          :disabled="true"
+          v-model="manhanvien"
+          label="Mã Nhân Viên"
+          required
           class="default"
         ></v-text-field>
 
@@ -65,17 +65,17 @@
 </template>
 
 <script>
-import MyButton from './MyButton.vue';
-import docgiaService from '../services/docgia.service';
-import sachService from '../services/sach.service';
-import { mapGetters } from 'vuex';
+import MyButton from "./MyButton.vue";
+import docgiaService from "../services/docgia.service";
+import sachService from "../services/sach.service";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MuonSachForm",
   props: {
     isUpdate: {
       type: Boolean,
-      default: false
+      default: false,
     },
     form: {
       type: Object,
@@ -85,33 +85,33 @@ export default {
         masach: "",
         ngaymuon: "",
         ngaytra: "",
-        manhanvien: ""
-      })
-    }
+        manhanvien: "",
+      }),
+    },
   },
-  data () {
+  data() {
     return {
       madocgias: [],
       masachs: [],
       manhanvien: "",
-    }
+    };
   },
   components: {
     MyButton,
   },
   methods: {
     handleSubmit() {
-      this.form.manhanvien = this.manhanvien
-      this.$emit('submit', this.form); // Emit the submit event with form data
+      this.form.manhanvien = this.manhanvien;
+      this.$emit("submit", this.form); // Emit the submit event with form data
     },
     cancel() {
-      this.$emit('cancel'); // Emit the cancel event
-    }
-  }, 
+      this.$emit("cancel"); // Emit the cancel event
+    },
+  },
   async mounted() {
     // Fetch data for madocgia and masach
-    this.madocgias = (await docgiaService.findAll()).map((item)=> item._id)
-    this.masachs = (await sachService.findAll()).map((item)=> item._id)
+    this.madocgias = (await docgiaService.findAll()).map((item) => item._id);
+    this.masachs = (await sachService.findAll()).map((item) => item._id);
 
     // Set manhanvien based on isUpdate and auth
     if (this.isUpdate) {
@@ -121,7 +121,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAuth']), // Truy cập biến auth từ Vuex store
+    ...mapGetters(["getAuth"]), // Truy cập biến auth từ Vuex store
   },
 };
 </script>

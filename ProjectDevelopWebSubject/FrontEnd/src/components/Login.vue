@@ -55,6 +55,7 @@ export default {
           _id: this._id,
           password: this.password,
         });
+
         await this.$store.dispatch("fetchAuth");
         console.log(response); // Kiểm tra phản hồi từ server
         this.$emit("submit", { success: true });

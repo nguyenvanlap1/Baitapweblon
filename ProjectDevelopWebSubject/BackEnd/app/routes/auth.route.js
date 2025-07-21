@@ -8,4 +8,6 @@ router.route("/logout").post(auth.logout);
 
 router.route("/checklogin").post(auth.checkLogin);
 
+router.route("/profile").get(auth.getProfile);
+
 module.exports = router;

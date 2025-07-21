@@ -12,7 +12,7 @@ async function ensureAdminAccountExists() {
     const hashedPassword = await bcrypt.hash("admin123", 10);
 
     const adminData = {
-      _id: "admin1", // hoặc bạn dùng ObjectId, tùy bạn
+      _id: "admin1",
       hotennv: "Quản trị viên",
       username: "admin",
       password: hashedPassword,
