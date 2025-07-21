@@ -5,7 +5,13 @@
         >Danh Sách Mượn Sách</v-card-title
       >
       <v-card-text>
-        <v-btn small color="primary" @click="toggleAddForm" v-if="!isAdding">
+        <v-btn
+          small
+          color="primary"
+          class="my-4"
+          @click="toggleAddForm"
+          v-if="!isAdding"
+        >
           Thêm hoặc cập nhật
         </v-btn>
 

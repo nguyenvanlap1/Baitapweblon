@@ -2,8 +2,9 @@
   <v-container fluid>
     <v-card>
       <v-card-title class="headline background-gradient"
-        >Danh Sách Sách</v-card-title
+        >Danh sách Sách</v-card-title
       >
+
       <v-card-text>
         <!-- <v-btn
           small
@@ -21,7 +22,7 @@
         ></SachForm> -->
         <div class="masonry-container">
           <div class="masonry-item" v-for="sach in sachs" :key="sach._id">
-            <v-card outlined class="mb-4">
+            <v-card outlined class="mx-2">
               <v-img
                 v-if="sach.image"
                 :src="sach.image"
@@ -192,6 +193,11 @@ export default {
 };
 </script>
 <style scoped>
+.background-gradient {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  color: white;
+}
+
 .masonry-container {
   column-count: 3;
   column-gap: 1rem;

@@ -4,29 +4,49 @@
       @submit.prevent="handleSubmit"
       class="max-w-xl mx-auto bg-white rounded-xl p-3"
     >
+      <!-- Mã độc giả: riêng 1 hàng -->
+      <v-text-field
+        v-model="_id"
+        label="Mã độc giả"
+        variant="outlined"
+        required
+        :rules="[rules.required]"
+      ></v-text-field>
+      <v-text-field
+        label="Mật khẩu"
+        v-model="password"
+        :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+        :type="visible ? 'text' : 'password'"
+        placeholder="Nhập mật khẩu"
+        prepend-inner-icon="mdi-lock-outline"
+        variant="outlined"
+        @click:append-inner="visible = !visible"
+        required
+        class="mb-4"
+        :rules="[rules.required, rules.password]"
+      ></v-text-field>
+
+      <!-- Các trường còn lại: chia 2 cột -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <v-text-field
-          v-model="_id"
-          label="Mã độc giả"
-          variant="outlined"
-          required
-        ></v-text-field>
         <v-text-field
           v-model="holot"
           label="Họ lót"
           variant="outlined"
+          :rules="[rules.required]"
           required
         ></v-text-field>
         <v-text-field
           v-model="ten"
           label="Tên"
           variant="outlined"
+          :rules="[rules.required]"
           required
         ></v-text-field>
         <v-text-field
           v-model="ngaysinh"
           label="Ngày sinh"
           variant="outlined"
+          :rules="[rules.required]"
           type="date"
           required
         ></v-text-field>
@@ -35,29 +55,21 @@
           :items="['Nam', 'Nữ']"
           label="Phái"
           variant="outlined"
+          :rules="[rules.required]"
           required
         ></v-select>
         <v-text-field
           v-model="diachi"
           label="Địa chỉ"
           variant="outlined"
+          :rules="[rules.required]"
           required
         ></v-text-field>
         <v-text-field
           v-model="dienthoai"
           label="Điện thoại"
           variant="outlined"
-          required
-        ></v-text-field>
-        <v-text-field
-          label="Mật khẩu"
-          v-model="password"
-          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-          :type="visible ? 'text' : 'password'"
-          placeholder="Nhập mật khẩu"
-          prepend-inner-icon="mdi-lock-outline"
-          variant="outlined"
-          @click:append-inner="visible = !visible"
+          :rules="[rules.required, rules.phone]"
           required
         ></v-text-field>
       </div>
@@ -99,8 +111,14 @@ export default {
       dienthoai: "",
       password: "",
       visible: false,
-
-      // Snackbar state
+      rules: {
+        required: (v) => !!v || "Trường này bắt buộc.",
+        phone: (v) =>
+          /^\d{10}$/.test(v) ||
+          "Số điện thoại không hợp lệ (phải gồm đúng 10 chữ số).",
+        password: (v) =>
+          (v && v.length >= 6) || "Mật khẩu phải ít nhất 6 ký tự.",
+      },
       snackbar: false,
       snackbarMessage: "",
       snackbarColor: "success",
@@ -124,7 +142,6 @@ export default {
         this.snackbarMessage = "Đăng ký thành công!";
         this.snackbarColor = "success";
         this.snackbar = true;
-
         this.$emit("submit", { success: true });
       } catch (error) {
         this.$emit("submit", {

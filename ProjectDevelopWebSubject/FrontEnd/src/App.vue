@@ -3,7 +3,7 @@
     <AppHeader @turnDrawer="turnDrawer" @refreshApp="refreshApp" />
     <v-main :key="appKey">
       <NavigationDrawer :drawnerOut="drawner" :key="appKey">
-        <router-view width="100%" :key="appKey" />
+        <router-view class="p-2" width="100%" :key="appKey" />
       </NavigationDrawer>
     </v-main>
   </v-app>

@@ -12,7 +12,6 @@ import store from "./store";
 
 // Components
 import App from "./App.vue";
-// import './style.css';
 
 const vuetify = createVuetify({
   components,

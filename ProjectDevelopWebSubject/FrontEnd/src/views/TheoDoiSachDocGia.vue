@@ -1,7 +1,9 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title class="headline">Sách bạn đã đăng ký mượn</v-card-title>
+      <v-card-title class="headline background-gradient"
+        >Sách bạn đã đăng ký mượn</v-card-title
+      >
       <v-card-text>
         <v-table>
           <thead>
@@ -70,3 +72,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.background-gradient {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  color: white;
+}
+</style>

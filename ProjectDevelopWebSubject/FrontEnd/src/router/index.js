@@ -7,7 +7,9 @@ import Sach from "../views/Sach.vue";
 import NhanVien from "../views/NhanVien.vue";
 import TheoDoiMuonSach from "../views/ThoiDoiMuonSach.vue";
 import MuonSach from "../views/MuonSach.vue";
+import ThongTinCaNhan from "../views/ThongTinCaNhan.vue";
 import TheoDoiSachDocGia from "../views/TheoDoiSachDocGia.vue";
+
 const routes = [
   {
     path: "/",
@@ -28,6 +30,11 @@ const routes = [
     path: "/docgia",
     name: "docgia",
     component: DocGia,
+  },
+  {
+    path: "/thongtincanhan",
+    name: "thongtincanhan",
+    component: ThongTinCaNhan,
   },
   {
     path: "/sach",
@@ -54,18 +61,6 @@ const routes = [
     name: "TheoDoiSachDocGia",
     component: TheoDoiSachDocGia,
   },
-  // {
-  //     path: "/contacts/:id",
-  //     name: "contact.edit",
-  //     component: () => import("../views/UserGeneric.vue"),
-  //     props: true // Truyền các biến trong $route.params vào làm props
-  // },
-  // {
-  //     path: "/contacts",
-  //     name: "contact.add",
-  //     component: () => import("../views/UserPost.vue"),
-  //     props: true // Truyền các biến trong $route.params vào làm props
-  // },
   {
     path: "/:pathMatch(.*)*",
     name: "notfound",
