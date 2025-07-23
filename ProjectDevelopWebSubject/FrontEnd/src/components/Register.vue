@@ -1,8 +1,9 @@
 <template>
   <v-container>
+    <h1 class="text-center text-2xl mb-2">Đăng ký tài khoản</h1>
     <v-form
       @submit.prevent="handleSubmit"
-      class="max-w-xl mx-auto bg-white rounded-xl p-3"
+      class="max-w-xl mx-auto bg-white rounded-xl"
     >
       <!-- Mã độc giả: riêng 1 hàng -->
       <v-text-field
@@ -139,16 +140,25 @@ export default {
 
       try {
         const response = await docgiaService.create(docgia);
-        this.snackbarMessage = "Đăng ký thành công!";
-        this.snackbarColor = "success";
-        this.snackbar = true;
-        this.$emit("submit", { success: true });
+        this.$emit("register-submit", { success: true });
+        this.resetForm();
       } catch (error) {
-        this.$emit("submit", {
+        this.$emit("register-submit", {
           success: false,
           message: "Đăng ký thất bại. Vui lòng thử lại.",
         });
       }
+    },
+    resetForm() {
+      this._id = "";
+      this.holot = "";
+      this.ten = "";
+      this.ngaysinh = "";
+      this.phai = "";
+      this.diachi = "";
+      this.dienthoai = "";
+      this.password = "";
+      this.visible = false;
     },
   },
 };

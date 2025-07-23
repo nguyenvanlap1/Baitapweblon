@@ -145,7 +145,6 @@ export default {
 </script>
 
 <style scoped>
-/* ✅ Làm rõ chữ thông báo khi chưa đăng nhập */
 .wrap-message {
   white-space: normal !important;
   word-break: break-word;

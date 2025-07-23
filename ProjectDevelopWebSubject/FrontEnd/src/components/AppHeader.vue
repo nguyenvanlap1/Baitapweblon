@@ -39,20 +39,16 @@
 
   <v-dialog v-model="dialog" max-width="500px">
     <v-card class="p-0 rounded-xl overflow-hidden">
-      <v-card-title class="text-center py-2 font-bold">Đăng nhập</v-card-title>
-      <v-card-text class="px-2">
-        <Login @submit="handleLoginSuccess" />
+      <v-card-text>
+        <Login @login-success="handleLoginSuccess" />
       </v-card-text>
     </v-card>
   </v-dialog>
 
   <v-dialog v-model="registerForm" max-width="500px">
     <v-card class="p-0 rounded-xl overflow-hidden">
-      <v-card-title class="text-center py-2 font-bold"
-        >Đăng ký tài khoản</v-card-title
-      >
-      <v-card-text class="px-2">
-        <Register @submit="handleRegisterSuccess" />
+      <v-card-text>
+        <Register @register-submit="handleRegisterSuccess" />
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -94,6 +90,7 @@ import Login from "./Login.vue";
 import Register from "./Register.vue";
 
 export default {
+  emits: ["turnDrawer", "refreshApp"],
   name: "AppBar",
   components: {
     Login,
@@ -139,24 +136,26 @@ export default {
         this.confirmLogoutDialog = false;
       }
     },
-    handleRegisterSuccess(result) {
-      if (result?.success) {
+    handleRegisterSuccess(resultRegister) {
+      if (resultRegister.success) {
         this.registerForm = false;
         this.snackbarMessage = "Đăng ký thành công!";
         this.snackbarColor = "success";
+        this.dialog = true;
       } else {
-        this.snackbarMessage = result?.message || "Đăng ký thất bại!";
+        this.snackbarMessage = resultRegister.message || "Đăng ký thất bại!";
         this.snackbarColor = "error";
       }
       this.snackbar = true;
     },
-    handleLoginSuccess(result) {
-      if (result?.success) {
+    handleLoginSuccess(resultLogin) {
+      if (resultLogin.success === true) {
+        this.$store.commit("setAuth", resultLogin.user);
         this.dialog = false;
         this.snackbarMessage = "Đăng nhập thành công!";
         this.snackbarColor = "success";
       } else {
-        this.snackbarMessage = result?.message || "Đăng nhập thất bại!";
+        this.snackbarMessage = "Đăng nhập thất bại!";
         this.snackbarColor = "error";
       }
       this.snackbar = true;

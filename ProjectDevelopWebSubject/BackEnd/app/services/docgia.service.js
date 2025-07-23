@@ -68,19 +68,19 @@ class DocGiaService {
         throw new Error("Invalid 'id' format");
       }
 
-      const filter = { _id: id }; // Sử dụng _id làm khóa chính
-      const update = this.extractDocGiaData(payload);
+      const update = { ...payload };
 
-      // Hash password nếu nó được cập nhật
+      // Nếu có password mới thì hash
       if (update.password) {
         update.password = await this.hashPassword(update.password);
       }
 
       const result = await this.DocGia.findOneAndUpdate(
-        filter,
+        { _id: id },
         { $set: update },
         { returnDocument: "after" }
       );
+
       return result;
     } catch (error) {
       throw new Error(`Failed to update: ${error.message}`);

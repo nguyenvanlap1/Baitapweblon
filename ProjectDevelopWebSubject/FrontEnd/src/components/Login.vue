@@ -1,8 +1,9 @@
 <template>
   <v-container>
+    <h1 class="text-center text-2xl mb-2">Đăng nhập</h1>
     <v-form
       @submit.prevent="handleSubmit"
-      class="max-w-md mx-auto bg-white rounded-xl p-2"
+      class="max-w-md mx-auto bg-white rounded-xl"
     >
       <div class="flex flex-col gap-2">
         <v-text-field
@@ -33,12 +34,12 @@
 </template>
 
 <script>
-import MyButton from "../components/MyButton.vue"; // Đảm bảo bạn đã import đúng
+import MyButton from "../components/MyButton.vue";
 import authService from "../services/auth.service";
 
 export default {
   components: {
-    MyButton, // Đăng ký component MyButton ở đây
+    MyButton,
   },
   data() {
     return {
@@ -50,17 +51,14 @@ export default {
   methods: {
     async handleSubmit() {
       try {
-        // Thực hiện đăng nhập với thông tin _id và password
         const response = await authService.login({
           _id: this._id,
           password: this.password,
         });
 
-        await this.$store.dispatch("fetchAuth");
-        console.log(response); // Kiểm tra phản hồi từ server
-        this.$emit("submit", { success: true });
+        this.$emit("login-success", { success: true, user: response });
       } catch (error) {
-        this.$emit("submit", {
+        this.$emit("login-success", {
           success: false,
           message: "Tài khoản hoặc mật khẩu không đúng.",
         });
@@ -70,6 +68,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* CSS tùy chỉnh nếu cần */
-</style>
+<style scoped></style>

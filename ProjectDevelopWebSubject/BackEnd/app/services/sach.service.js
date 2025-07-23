@@ -20,7 +20,6 @@ class SachService {
       !payload.manhaxuatban ||
       !payload.nguongoc_tacgia
     ) {
-      console.log("here");
       throw new ApiError(
         400,
         "Missing required fields: '_id', 'tensach', 'dongia', 'soquyen', 'namxuatban', 'manhaxuatban', and/or 'nguongoc_tacgia'"
