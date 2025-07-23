@@ -31,16 +31,16 @@ export default {
     },
     refreshApp() {
       console.log("refesh");
-      this.appKey += 1; // Thay đổi key để re-render toàn bộ ứng dụng
+      this.appKey += 1;
     },
   },
   computed: {
-    ...mapGetters(["getAuth"]), // Truy cập biến auth từ Vuex store
+    ...mapGetters(["getAuth"]),
   },
   async mounted() {
     try {
-      await this.$store.dispatch("fetchAuth"); // Gọi action để fetch auth
-      console.log("Auth:", this.getAuth); // Kiểm tra auth trong console
+      await this.$store.dispatch("fetchAuth");
+      console.log("Auth:", this.getAuth);
     } catch (error) {
       console.error("Lỗi khi lấy auth:", error);
     }

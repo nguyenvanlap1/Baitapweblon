@@ -4,7 +4,7 @@
     class="w-[90%] mx-auto mt-2 grid grid-cols-1 md:grid-cols-3 gap-3"
   >
     <!-- Khoi thong tin ca nhan -->
-    <div class="md:col-span-2 borderrounded-lg shadow-md">
+    <div class="md:col-span-2 border rounded-lg shadow-md">
       <h2
         class="text-xl px-2 py-1 rounded-t-lg mb-2 text-white headline background-gradient"
       >
@@ -13,11 +13,20 @@
       <div class="p-3">
         <form @submit.prevent="updateProfile">
           <div class="grid grid-cols-2 gap-4">
+            <div class="col-span-2">
+              <label class="block font-semibold">ID đăng nhập:</label>
+              <input
+                :value="getAuth._id"
+                class="w-full border px-3 py-2 rounded-lg bg-gray-100 cursor-not-allowed"
+                type="text"
+                readonly
+              />
+            </div>
             <div>
               <label class="block font-semibold">Họ lót:</label>
               <input
                 v-model="profile.holot"
-                class="w-full border px-3 py-2 rounded"
+                class="w-full border px-3 py-2 rounded-lg"
                 type="text"
               />
             </div>
@@ -26,7 +35,7 @@
               <label class="block font-semibold">Tên:</label>
               <input
                 v-model="profile.ten"
-                class="w-full border px-3 py-2 rounded"
+                class="w-full border px-3 py-2 rounded-lg"
                 type="text"
               />
             </div>
@@ -35,7 +44,7 @@
               <label class="block font-semibold">Giới tính:</label>
               <select
                 v-model="profile.phai"
-                class="w-full border px-3 py-2 rounded"
+                class="w-full border px-3 py-2 rounded-lg"
               >
                 <option>Nam</option>
                 <option>Nữ</option>
@@ -46,7 +55,7 @@
               <label class="block font-semibold">Ngày sinh:</label>
               <input
                 v-model="profile.ngaysinh"
-                class="w-full border px-3 py-2 rounded"
+                class="w-full border px-3 py-2 rounded-lg"
                 type="date"
               />
             </div>
@@ -55,7 +64,7 @@
               <label class="block font-semibold">Địa chỉ:</label>
               <input
                 v-model="profile.diachi"
-                class="w-full border px-3 py-2 rounded"
+                class="w-full border px-3 py-2 rounded-lg"
                 type="text"
               />
             </div>
@@ -64,7 +73,7 @@
               <label class="block font-semibold">Điện thoại:</label>
               <input
                 v-model="profile.dienthoai"
-                class="w-full border px-3 py-2 rounded"
+                class="w-full border px-3 py-2 rounded-lg"
                 type="text"
               />
             </div>
@@ -83,56 +92,56 @@
     </div>
 
     <!-- Khoi mat khau -->
-    <div class="border rounded-lg shadow-md">
+    <div class="border rounded-lg shadow-md flex flex-col">
       <h2
         class="text-xl px-2 py-1 rounded-t-lg mb-2 text-white headline background-gradient"
       >
         Đổi mật khẩu
       </h2>
-      <div class="p-3">
-        <form @submit.prevent="changePassword">
-          <!-- Form đổi mật khẩu -->
-
-          <div class="grid gap-4">
-            <div>
-              <label class="block font-semibold">Mật khẩu cũ:</label>
-              <input
-                v-model="passwords.oldPassword"
-                class="w-full border px-3 py-2 rounded"
-                type="password"
-                placeholder="Nhập mật khẩu cũ"
-              />
-            </div>
-            <div>
-              <label class="block font-semibold">Mật khẩu mới:</label>
-              <input
-                v-model="passwords.newPassword"
-                class="w-full border px-3 py-2 rounded"
-                type="password"
-                placeholder="Nhập mật khẩu mới"
-              />
-            </div>
-            <div>
-              <label class="block font-semibold">Nhập lại mật khẩu mới:</label>
-              <input
-                v-model="passwords.confirmPassword"
-                class="w-full border px-3 py-2 rounded"
-                type="password"
-                placeholder="Xác nhận mật khẩu mới"
-              />
-            </div>
+      <form
+        @submit.prevent="changePassword"
+        class="flex flex-grow flex-col justify-between p-3"
+      >
+        <!-- Form đổi mật khẩu -->
+        <div class="grid gap-4">
+          <div>
+            <label class="block font-semibold">Mật khẩu cũ:</label>
+            <input
+              v-model="passwords.oldPassword"
+              class="w-full border px-3 py-2 rounded-lg"
+              type="password"
+              placeholder="Nhập mật khẩu cũ"
+            />
           </div>
-
-          <div class="mt-4 flex justify-center">
-            <button
-              type="submit"
-              class="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-lg"
-            >
-              Đổi mật khẩu
-            </button>
+          <div>
+            <label class="block font-semibold">Mật khẩu mới:</label>
+            <input
+              v-model="passwords.newPassword"
+              class="w-full border px-3 py-2 rounded-lg"
+              type="password"
+              placeholder="Nhập mật khẩu mới"
+            />
           </div>
-        </form>
-      </div>
+          <div>
+            <label class="block font-semibold">Nhập lại mật khẩu mới:</label>
+            <input
+              v-model="passwords.confirmPassword"
+              class="w-full border px-3 py-2 rounded-lg"
+              type="password"
+              placeholder="Xác nhận mật khẩu mới"
+            />
+          </div>
+        </div>
+
+        <div class="mt-6 flex justify-center">
+          <button
+            type="submit"
+            class="bg-[#1967C0] hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg"
+          >
+            Đổi mật khẩu
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -146,7 +155,6 @@ export default {
   data() {
     return {
       profile: {
-        _id: "",
         holot: "",
         ten: "",
         phai: "Nam",
@@ -166,13 +174,14 @@ export default {
   },
   mounted() {
     if (this.getAuth) {
-      this.profile = { ...this.getAuth };
+      const { _id, ...info } = this.getAuth;
+      this.profile = { ...info };
     }
   },
   methods: {
     async updateProfile() {
       try {
-        const res = await DocGia.update(this.profile._id, this.profile);
+        const res = await DocGia.update(this.getAuth._id, this.profile);
         if (res?.success || res) {
           await store.dispatch("updateAuth");
           alert("Cập nhật thành công!");

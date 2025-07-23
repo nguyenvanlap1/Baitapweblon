@@ -1,6 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "../views/Home.vue";
-import Login from "../views/Login.vue";
 import NXB from "../views/NXB.vue";
 import DocGia from "../views/DocGia.vue";
 import Sach from "../views/Sach.vue";
@@ -15,11 +14,6 @@ const routes = [
     path: "/",
     name: "home",
     component: Home,
-  },
-  {
-    path: "/login",
-    name: "login",
-    component: Login,
   },
   {
     path: "/nxb",

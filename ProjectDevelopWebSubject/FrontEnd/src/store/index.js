@@ -14,7 +14,7 @@ const store = createStore({
     async fetchAuth({ commit }) {
       try {
         const auth = await authService.checkLogin();
-        console.log("Kiem tra dang nhap", auth);
+        //console.log("Kiem tra dang nhap", auth);
         commit("setAuth", auth); // Cập nhật auth vào state
         console.log("Du lieu nhan duoc khi dang nhap", auth);
       } catch (error) {

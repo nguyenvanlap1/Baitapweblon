@@ -4,7 +4,6 @@ const ApiError = require("../api-error");
 
 exports.create = async (req, res, next) => {
   try {
-    console.log("Duoc goi", req.body);
     const muonSachService = new MuonSachService(MongoDB.client);
     const result = await muonSachService.create(req.body);
     res.status(201).send(result);
@@ -101,7 +100,6 @@ exports.deleteAll = async (req, res, next) => {
 };
 
 exports.findByDocGia = async (req, res, next) => {
-  console.log("herre");
   try {
     const muonSachService = new MuonSachService(MongoDB.client);
     console.log(req.body.madocgia);
