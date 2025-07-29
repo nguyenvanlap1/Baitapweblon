@@ -145,7 +145,7 @@ export default {
       } catch (error) {
         this.$emit("register-submit", {
           success: false,
-          message: "Đăng ký thất bại. Vui lòng thử lại.",
+          message: error.message || "Đăng ký thất bại. Vui lòng thử lại.",
         });
       }
     },

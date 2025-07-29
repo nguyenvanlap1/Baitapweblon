@@ -5,6 +5,12 @@ const ApiError = require("../api-error");
 exports.create = async (req, res, next) => {
   try {
     const docGiaService = new DocGiaService(MongoDB.client);
+
+    const existing = await docGiaService.findById(req.body._id);
+    if (existing) {
+      return next(new ApiError(400, "Mã độc giả đã tồn tại."));
+    }
+
     const result = await docGiaService.create(req.body);
     res.status(201).send(result);
   } catch (error) {
