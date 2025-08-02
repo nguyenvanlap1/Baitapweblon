@@ -1,10 +1,14 @@
 <template>
   <v-app-bar :elevation="2" class="background-gradient" app>
     <v-app-bar-nav-icon @click="handlClick"></v-app-bar-nav-icon>
-    <v-app-bar-title><v-btn to="/">Quản Lý mượn sách</v-btn></v-app-bar-title>
+    <div class="text-lg font-semibold text-white">
+      <router-link to="/" class="hover:underline"
+        >Quản Lý mượn sách</router-link
+      >
+    </div>
     <v-spacer></v-spacer>
     <button
-      class="text-white font-bold w-fit border mr-2 p-2 rounded-lg bg-blue-500 hover:scale-105 hover:bg-blue-700 transition"
+      class="text-white font-bold w-fit border mr-2 py-2 px-3 rounded-xl bg-blue-500 hover:scale-105 hover:bg-blue-700 transition"
       text
       v-if="!auth._id"
       @click="registerForm = true"
@@ -13,7 +17,7 @@
     </button>
 
     <button
-      class="text-white font-bold w-fit border mr-2 p-2 rounded-lg bg-blue-500 hover:scale-105 hover:bg-blue-700 transition"
+      class="text-white font-bold w-fit border mr-2 py-2 px-3 rounded-xl bg-blue-500 hover:scale-105 hover:bg-blue-700 transition"
       text
       v-if="!auth._id"
       @click="dialog = true"
@@ -29,7 +33,7 @@
     </span>
     <!-- Thêm đăng ký -->
     <button
-      class="text-white font-bold w-fit border mr-2 p-2 rounded-lg bg-blue-500 hover:scale-105 hover:bg-blue-700 transition"
+      class="text-white font-bold w-fit border mr-2 py-2 px-3 rounded-xl bg-blue-500 hover:scale-105 hover:bg-blue-700 transition"
       v-if="auth._id"
       @click="logout"
     >
@@ -51,21 +55,26 @@
 
   <!-- Dialog xác nhận đăng xuất -->
   <v-dialog v-model="confirmLogoutDialog" max-width="400px">
-    <v-card class="p-3 rounded-xl">
-      <v-card-title class="text-h6">Xác nhận đăng xuất</v-card-title>
-      <v-card-text>Bạn có chắc chắn muốn đăng xuất không?</v-card-text>
-      <v-card-actions class="justify-end">
-        <v-btn text @click="confirmLogoutDialog = false">Hủy</v-btn>
-        <v-btn
-          color="red"
-          variant="flat"
-          class="rounded-xl text-white font-semibold p-2"
+    <div class="bg-white p-2 rounded-xl shadow-lg">
+      <div class="text-center text-xl font-bold mb-2">Xác nhận</div>
+      <div class="text-center text-gray-700 mb-4">
+        Bạn có chắc chắn muốn đăng xuất không?
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button
+          class="px-4 py-2 rounded-md text-gray-700 hover:bg-gray-100 transition"
+          @click="confirmLogoutDialog = false"
+        >
+          Hủy
+        </button>
+        <button
+          class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-xl transition"
           @click="confirmLogout"
         >
           Đăng xuất
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+        </button>
+      </div>
+    </div>
   </v-dialog>
 
   <v-snackbar
