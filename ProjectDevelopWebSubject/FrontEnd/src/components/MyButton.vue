@@ -1,29 +1,28 @@
 <template>
   <v-btn @click="handleClick" :color="color" small dense>
-    <v-icon v-if="icon" class="mr-1">{{ icon }}</v-icon>
+    <v-icon v-if="icon" class="mr-1 rounded-xl">{{ icon }}</v-icon>
     <slot></slot>
   </v-btn>
 </template>
 
-
 <script>
 export default {
-  name: 'MyButton',
+  name: "MyButton",
   props: {
     color: {
       type: String,
-      default: 'primary'
+      default: "primary",
     },
     icon: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   methods: {
     handleClick() {
-      this.$emit('click');
-    }
-  }
+      this.$emit("click");
+    },
+  },
 };
 </script>
 

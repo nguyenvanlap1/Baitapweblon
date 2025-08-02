@@ -38,19 +38,15 @@
   </v-app-bar>
 
   <v-dialog v-model="dialog" max-width="500px">
-    <v-card class="p-0 rounded-xl overflow-hidden">
-      <v-card-text>
-        <Login @login-success="handleLoginSuccess" />
-      </v-card-text>
-    </v-card>
+    <div class="rounded-xl overflow-hidden bg-white shadow-lg p-0">
+      <Login @login-success="handleLoginSuccess" />
+    </div>
   </v-dialog>
 
   <v-dialog v-model="registerForm" max-width="500px">
-    <v-card class="p-0 rounded-xl overflow-hidden">
-      <v-card-text>
-        <Register @register-submit="handleRegisterSuccess" />
-      </v-card-text>
-    </v-card>
+    <div class="rounded-xl overflow-hidden bg-white shadow-lg p-0">
+      <Register @register-submit="handleRegisterSuccess" />
+    </div>
   </v-dialog>
 
   <!-- Dialog xác nhận đăng xuất -->

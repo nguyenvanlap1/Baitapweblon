@@ -7,7 +7,8 @@ exports.create = async (req, res, next) => {
     const docGiaService = new DocGiaService(MongoDB.client);
 
     const existing = await docGiaService.findById(req.body._id);
-    if (existing) {
+
+    if (existing.length > 0) {
       return next(new ApiError(400, "Mã độc giả đã tồn tại."));
     }
 
