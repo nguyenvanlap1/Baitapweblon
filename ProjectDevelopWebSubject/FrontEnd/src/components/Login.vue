@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 class="text-center text-2xl mb-2">Đăng nhập</h1>
+    <h1 class="text-center text-2xl font-bold mb-4">Đăng nhập</h1>
     <v-form
       @submit.prevent="handleSubmit"
       class="max-w-md mx-auto bg-white rounded-xl"
@@ -26,8 +26,13 @@
         ></v-text-field>
       </div>
 
-      <div class="mt-6 flex justify-center">
-        <MyButton type="submit" color="blue">Đăng nhập</MyButton>
+      <div class="mt-2 flex justify-center">
+        <button
+          type="submit"
+          class="border min-w-[150px] rounded-xl px-3 py-2 bg-blue-500 text-white hover:scale-105 hover:bg-blue-700 transition"
+        >
+          Đăng nhập
+        </button>
       </div>
     </v-form>
   </v-container>

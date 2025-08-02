@@ -23,9 +23,7 @@ async function ensureAdminAccountExists() {
     };
 
     await nhanVienService.create(adminData);
-    console.log(
-      "✅ Admin account created: id=001, username=admin, password=admin123"
-    );
+    console.log("✅ Admin account created: id=admin1, password=admin123");
   } else {
     console.log("✅ Admin account already exists.");
   }
