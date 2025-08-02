@@ -102,7 +102,7 @@ exports.deleteAll = async (req, res, next) => {
 exports.findByDocGia = async (req, res, next) => {
   try {
     const muonSachService = new MuonSachService(MongoDB.client);
-    console.log(req.body.madocgia);
+
     const results = await muonSachService.find({ madocgia: req.body.madocgia });
     res.send(results);
   } catch (error) {
